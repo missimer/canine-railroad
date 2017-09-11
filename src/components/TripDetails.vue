@@ -3,22 +3,15 @@
     <h1>Trip Details for Dash</h1>
     <div id="map"></div>
     <br> <br>
-    <ul class="list-group">
-    <router-link
-      v-for="index in (locations.length - 1)"
-      tag="li"
-      :to="/trips/ + tripId + /leg/ + (index - 1)"
-      :key="index"
-      class="list-group-item"
-      style="cursor: pointer">
-      {{ locations[index - 1] }} to {{ locations[index] }}
-    </router-link>
-    </ul>
+    <app-leg-table :legs="legs" :linkPrefix="'/trips/' + tripId + '/leg/'"></app-leg-table>
   </div>
 </template>
 
 <script>
 /* global google */
+
+import LegTable from './LegTable.vue'
+
 export default {
   name: 'tripDetails',
 
@@ -33,7 +26,8 @@ export default {
         'Danbury, CT',
         'Springfield, MA',
         'Boston, MA'
-      ]
+      ],
+      legs: []
     }
   },
 
@@ -44,8 +38,8 @@ export default {
       this.directionsService = new google.maps.DirectionsService()
       this.directionsDisplay = new google.maps.DirectionsRenderer()
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 6,
-        center: {lat: 41.85, lng: -87.65}
+        zoom: 4,
+        center: {lat: 39.8283, lng: -98.5795}
       })
       this.directionsDisplay.setMap(map)
       this.calculateAndDisplayRoute()
@@ -65,11 +59,26 @@ export default {
       }, (response, status) => {
         if (status === 'OK') {
           this.directionsDisplay.setDirections(response)
+          this.legs = []
+
+          for (var index in this.directionsDisplay.getDirections().routes[0].legs) {
+            var leg = this.directionsDisplay.getDirections().routes[0].legs[index]
+            this.legs.push({
+              start_address: leg.start_address,
+              end_address: leg.end_address,
+              duration: leg.duration,
+              distance: leg.distance
+            })
+          }
         } else {
           window.alert('Directions request failed due to ' + status)
         }
       })
     }
+  },
+
+  components: {
+    appLegTable: LegTable
   },
 
   mounted () {

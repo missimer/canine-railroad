@@ -1,14 +1,16 @@
 <template>
   <div class="hello">
     <h1>Your User Page</h1> <br> <br>
-    Email: <input v-model="email"> <br> <br>
-    Address: <input v-model="address"> <br> <br>
-    Saturday Availability: <input maxlength="4" size="4" v-model="saturdayAvailability"> Hours <br> <br>
-    Sunday Availability: <input maxlength="4" size="4" v-model="sundayAvailability"> Hours
+    <app-user-input v-model="email" field="Email"></app-user-input>
+    <app-user-input v-model="address" field="Address"></app-user-input>
+    <app-user-input v-model="saturdayAvailability" field="Saturday Availability (Hours)"></app-user-input>
+    <app-user-input v-model="sundayAvailability" field="Sunday Availability (Hours)"></app-user-input>
   </div>
 </template>
 
 <script>
+import UserInput from './UserInput.vue'
+
 export default {
   name: 'user',
   data () {
@@ -18,27 +20,10 @@ export default {
       sundayAvailability: 2,
       saturdayAvailability: 2
     }
+  },
+
+  components: {
+    appUserInput: UserInput
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-}
-a {
-  color: #42b983;
-}
-</style>
