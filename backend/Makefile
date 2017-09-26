@@ -2,7 +2,7 @@
 
 SOURCE_VENV:=source venv/bin/activate &&
 
-run:
+run: venv
 	$(SOURCE_VENV) python src/app.py
 
 tests: venv
