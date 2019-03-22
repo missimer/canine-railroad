@@ -12,13 +12,6 @@
       style="cursor: pointer">
       {{ trip.name }} - From {{ trip.start }}, To {{ trip.destination }}
     </router-link>
-    <router-link
-      tag="li"
-      to="/tripCreate"
-      class="list-group-item"
-      style="cursor: pointer">
-      Create New Trip
-    </router-link>
     </ul>
   </div>
 </template>

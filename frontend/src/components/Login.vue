@@ -8,7 +8,7 @@
       <br> <br>
     </template>
     <template v-else>
-    <p>{{ loginType }}</p>
+      {{ logout() }}
     </template>
   </div>
 </template>
@@ -48,6 +48,9 @@ export default {
       } else {
         alert('invalid username and password')
       }
+    },
+    logout () {
+      this.$store.dispatch('logOut')
     }
   }
 }
